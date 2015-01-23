@@ -2,19 +2,24 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Chat Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DjangoWebsocet Chat Demo</title>
+
+    <link rel="stylesheet" href="http://stingtest.qiniudn.com/pure-min.css">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 
     <script type="text/javascript">
         var s = new WebSocket("{{ websocket_url }}/ws/");
         s.onopen = function() {
 
-
         };
 
         s.onmessage = function(e) {
-            var bb = document.getElementById('blackboard');
+            var bb = document.getElementById('textarea');
             var html = bb.innerHTML;
-            bb.innerHTML = html + '<br/>' + e.data;
+
+            var new_html = '<div class="speach">' + e.data + '</div>';
+            bb.innerHTML = html + new_html;
         };
 
         s.onerror = function(e) {
@@ -30,13 +35,44 @@
           s.send(value);
         }
 
+
+        $(function () {
+            $('#textarea').height($(document).height() - 62);
+
+            $('#sendBtn').click(function() {
+                send();
+                return false;
+            });
+        });
+
+        $(window).resize(function(){
+            $('#textarea').height($(document).height() - 62);
+        })
+
+
     </script>
+
+    <style type="text/css">
+        #textarea {
+            padding: 6px 10px;
+            margin-bottom: 10px;
+            border: 2px solid cornflowerblue;
+        }
+
+    </style>
 </head>
 
 <body>
-    <h1>WebSocket Demo</h1>
-    <input type="text" id="text" />
-    <input type="button" value="send" onClick="send();"/>
-    <div id="blackboard" style="background-color:black;color:white;"></div>
+    <div id="textarea"></div>
+    <form class="pure-form pure-g">
+        <div class="pure-u-3-4">
+            <input class="pure-input-1 pure-input-rounded" type="text" id="text" placeholder="说点什么" >
+        </div>
+        <div class="pure-u-1-4">
+            <!--<bu class="pure-button pure-button-primary pure-input-1" id="sendBtn" type="submit", value="Send"/>-->
+            <button class="pure-button pure-button-primary pure-input-1" id="sendBtn">Send</button>
+
+        </div>
+    </form>
 </body>
 </html>
