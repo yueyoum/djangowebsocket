@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Chat Demo</title>
+
+    <script type="text/javascript">
+        var s = new WebSocket("{{ websocket_url }}/ws/");
+        s.onopen = function() {
+
+
+        };
+
+        s.onmessage = function(e) {
+            var bb = document.getElementById('blackboard');
+            var html = bb.innerHTML;
+            bb.innerHTML = html + '<br/>' + e.data;
+        };
+
+        s.onerror = function(e) {
+            console.log(e);
+        };
+
+        s.onclose = function(e) {
+            alert("connection closed");
+        };
+
+        function send() {
+          var value = document.getElementById('text').value;
+          s.send(value);
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>WebSocket Demo</h1>
+    <input type="text" id="text" />
+    <input type="button" value="send" onClick="send();"/>
+    <div id="blackboard" style="background-color:black;color:white;"></div>
+</body>
+</html>
