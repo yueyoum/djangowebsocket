@@ -3,11 +3,23 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>DjangoWebsocket Demo. Login</title>
+    <link rel="stylesheet" href="http://stingtest.qiniudn.com/pure-min.css">
+
+    <style type="text/css">
+        #main {
+            /*text-align: center;*/
+        }
+    </style>
 </head>
 <body>
-    <form action="{{ action }}" method="post">
-        {{ form }}
-        <input type="submit" value="Login" />
+<div id="main">
+    <form action="{{ action }}" method="post" class="pure-form">
+        <fieldset class="pure-group">
+            {{ form }}
+            <button type="submit" class="pure-button pure-button-primary pure-input-1-1">Login</button>
+        </fieldset>
     </form>
+</div>
+
 </body>
 </html>

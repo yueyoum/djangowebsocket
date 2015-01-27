@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django import forms
 
 class LoginForm(forms.Form):
-    name = forms.CharField(required=True)
+    name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'pure-input-1-1'}))
 
 
 class Index(View):
@@ -15,7 +15,7 @@ class Index(View):
                 'login.html',
                 {
                     'action': request.path,
-                    'form': LoginForm().as_table()
+                    'form': LoginForm().as_p()
                 }
             )
 

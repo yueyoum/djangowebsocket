@@ -47,6 +47,7 @@ class WebSocketView(object):
 
 
     def publish_global(self, text):
+        print "PUBLISH GLOBAL", text
         self.redis.publish(REDIS_GLOBAL_CHANNEL, text)
 
     def recv(self):
