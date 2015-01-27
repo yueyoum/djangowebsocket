@@ -20,6 +20,8 @@
 
             var new_html = '<div class="speach">' + e.data + '</div>';
             bb.innerHTML = html + new_html;
+
+            $('#textarea').animate({scrollTop: $('#textarea')[0].scrollHeight});
         };
 
         s.onerror = function(e) {
@@ -35,18 +37,23 @@
           s.send(value);
         }
 
+        var get_textarea_height = function() {
+            var form_height = $('#inputForm').height();
+            return $(window).height() - form_height - (10 + 2) * 2 - 10;
+        };
 
         $(function () {
-            $('#textarea').height($(document).height() - 62);
+            $('#textarea').height(get_textarea_height());
 
             $('#sendBtn').click(function() {
                 send();
+                $('#text').val('');
                 return false;
             });
         });
 
         $(window).resize(function(){
-            $('#textarea').height($(document).height() - 62);
+            $('#textarea').height(get_textarea_height());
         })
 
 
@@ -57,6 +64,15 @@
             padding: 6px 10px;
             margin-bottom: 10px;
             border: 2px solid cornflowerblue;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            word-wrap: break-word;
+        }
+
+        .speach {
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgb(220, 220, 220);
         }
 
     </style>
@@ -64,7 +80,7 @@
 
 <body>
     <div id="textarea"></div>
-    <form class="pure-form pure-g">
+    <form class="pure-form pure-g" id="inputForm">
         <div class="pure-u-3-4">
             <input class="pure-input-1 pure-input-rounded" type="text" id="text" placeholder="说点什么" >
         </div>
